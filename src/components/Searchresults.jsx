@@ -1,0 +1,1 @@
+/*Lister opp søkeresultater i "bookcards"*/
