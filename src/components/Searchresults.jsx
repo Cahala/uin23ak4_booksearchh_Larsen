@@ -1,27 +1,36 @@
 /*Lister opp søkeresultater i "bookcards"*/
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
-import React, { useState, useEffect } from 'react';
+export default function SearchResults({content, setQuery, setCurrentKey}) {
 
-export default function JamesBondBook({currentId}){
-    const [book, setBooks] = useState()
+  const [search, setSearch] = useState("")
 
-    const getBook = async() => {
-    fetch('https://openlibrary.org/search.json?author=Ian+Fleming&q=James+Bond')
-        .then(response => response.json())
-        .then(data => setBooks(data))
-        .catch(error => console.error(error))
-    }
+  const handleChange = (event) => setSearch(event.target.value)
 
-    useEffect(() => {
-        getBook()
-    },[currentId])
 
-  const getCoverImageUrl = (isbn, size = 'M') => {
-    return `https://covers.openlibrary.org/b/isbn/${isbn}-${size}.jpg`;
-  };
+  const handleSubmit = (e) => {
+      e.preventDefault() //Denne vil hindre nettsiden å refreshe seg når man trykke submit
+      setQuery(search)
+  }
+
+  const handleClick = (key) => {
+      setCurrentKey(key)
+      localStorage.setItem("boknøkkel", key)
+  }
 
   return (
-    <>
-    </>
-  );
+  <>
+      <h1>Bøker</h1>
+      <form onSubmit={handleSubmit}>
+          <label htmlFor="search">Søk etter bøker:</label>
+          <input type="text" id="search" placeholder="Skriv her..." onChange={handleChange}></input>
+          <input type="submit" value="Søk"></input>
+      </form>
+      <ul className="book-list">
+          {content.map((item) => <li key={item.key}>
+          <Link to ={item.name} onClick={() => handleClick(item.key)}>{item.name}</Link></li>)}
+      </ul>
+  </>
+  )
 }

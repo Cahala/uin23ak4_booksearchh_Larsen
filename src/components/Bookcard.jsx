@@ -1,26 +1,19 @@
-/*Listevisning av en bok (for både søkeresultater og forsiden)*/
-import { SearchResults } from './components/SearchResults.jsx';
+export default function BookCard({ title, isbn, firstpublish, author_name, ratingsaverage, id_goodreads }) {
+  // Funksjon for å hente bilde URL basert på ISBN
+  const getCoverImageUrl = (isbn) => `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
 
-export default function BookCard({/*title, category, ingress, id*/}){
-    
-    return(
-        <article>
-        <h1>James Bond Books by Ian Fleming</h1>
-        <ul>
-          {books.map((book, index) => (
-            <li key={index}>
-              <h3>{book.title}</h3>
-              {book.isbn && (
-                <img src={getCoverImageUrl(book.isbn[0])} alt={`Cover of ${book.title}`} />
-              )}
-              <p>{book.firstpublish}</p>
-              <p>{book.author_name}</p>
-              <p>{book.ratingsaverage}</p>
-              <a href= "https://www.goodreads.com/"></a>
-              
-            </li>
-          ))}
-        </ul>
-      </article>
-    )
+  return (
+    <article key={isbn}>
+      <h1>{title}</h1>
+      {isbn && (
+        <img src={getCoverImageUrl(isbn)} alt={`Cover of ${title}`} />
+      )}
+      <p>{firstpublish}</p>
+      <p>{author_name}</p>
+      <p>{ratingsaverage}</p>
+      {id_goodreads && (
+        <a href={`https://www.goodreads.com/book/show/${id_goodreads}`} target="_blank" rel="noopener noreferrer">Read more on Goodreads</a>
+      )}
+    </article>
+  );
 }
