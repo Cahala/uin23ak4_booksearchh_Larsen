@@ -1,18 +1,25 @@
-export default function BookCard({ title, isbn, firstpublish, author_name, ratingsaverage, id_goodreads }) {
+export default function BookCard({ book }) {
   // Funksjon for å hente bilde URL basert på ISBN
-  const getCoverImageUrl = (isbn) => `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
+  const getCoverImageUrl = (isbn) => isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg` : ''
+
+  const isbn = book.isbn ? book.isbn[0] : ''
+
+  const hasGoodreadsId = book.id_goodreads ? true : false;
+
 
   return (
-    <article key={isbn}>
-      <h1>{title}</h1>
+    <article className="bookCard">
+      <h1>{book.title}</h1>
       {isbn && (
-        <img src={getCoverImageUrl(isbn)} alt={`Cover of ${title}`} />
+        <img src={getCoverImageUrl(isbn)} alt={`Cover of ${book.title}`} />
       )}
-      <p>{firstpublish}</p>
-      <p>{author_name}</p>
-      <p>{ratingsaverage}</p>
-      {id_goodreads && (
-        <a href={`https://www.goodreads.com/book/show/${id_goodreads}`} target="_blank" rel="noopener noreferrer">Read more on Goodreads</a>
+      <p>Forfatter: {book.author_name?.join(", ")}</p>
+      <p>Første publiseringsår: {book.first_publish_year}</p>
+      {book.ratings_average && (
+        <p>Gjennomsnittlig rating: {book.ratings_average}</p>
+      )}
+      {hasGoodreadsId && (
+        <a href={`https://www.goodreads.com/book/show/${book.id_goodreads[0]}`} target="_blank" rel="noopener noreferrer">Mer om boka på Goodreads</a>
       )}
     </article>
   );

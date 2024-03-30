@@ -1,39 +1,54 @@
-import { useState, useEffect } from 'react'
+import { Router } from 'react-router-dom'
 import './App.css'
+import { useState, useEffect } from 'react'
 import Layout from './components/Layout'
-import { Route, Router, Routes } from 'react-router-dom'
-import SearchResults from './components/SearchResults'
+import SearchBar from './components/SearchBar'
+import BookList from './components/BookList'
 
 function App() {
-  const [content, setContent] = useState([])
-  const [query, setQuery] = useState("James+Bond")
-  const [currentKey, setCurrentKey] = useState("")
+  const [query, setQuery] = useState('')
+  const [books, setBooks] = useState([])
+  const [searching, setSearching] = useState(false)
 
-
-  const getBooks = async()=>{
-    try { const response = await fetch(`https://openlibrary.org/search.json?author=Ian+Fleming&limit=14&q=${query}`)
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const response = await fetch('https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond')
       const data = await response.json()
-      setContent(data.results)
-    } catch {
-        console.error("Det har skjedd en feil")
-      }
+      setBooks(data.docs)
+    };
+
+    if (!query) {
+      fetchBooks()
     }
+  }, [query])
 
-  useEffect(()=>{
-    getBooks()
-    setCurrentKey(localStorage.getItem("BokNavn"))
-  },[query]) //For å gi beskjed om at det skal hentes/bygges på nytt 
+  
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (query.length >= 3) {
+        setSearching(true)
+        const response = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`)
+        const data = await response.json()
+        setBooks(data.docs)
+      } else {
+        setSearching(false)
+      }
+    };
 
-  console.log("KEY", currentKey)
+    fetchSearchResults()
+  }, [query])
+
 
   return (
-    <Router>
       <Layout>
-        <Routes> 
-            <Route index element={<SearchResults content={content} setQuery={setQuery} setCurrentKey={setCurrentKey} />}></Route>
-        </Routes>
+      <SearchBar onSearch={(input) => {
+        setQuery(input);
+        if (input.length < 3) {
+          setSearching(false)
+        }
+      }} />
+      <BookList books={books} />
       </Layout>
-    </Router>  
   )
 }
 

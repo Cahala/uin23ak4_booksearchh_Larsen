@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-import SearchResults from "./SearchResults";
 
 export default function Layout({children}) {
 
@@ -10,13 +8,9 @@ export default function Layout({children}) {
             </nav>
         </header>
         <main>
-            <h1>Velkommen til bokappen</h1>
-            <h3>James Bond bokserie</h3>
-            <SearchResults />
-        {children}
+          {children}
         </main>
         <footer></footer>
     </>
     )
-
 }

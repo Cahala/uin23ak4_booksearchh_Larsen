@@ -1,36 +1,38 @@
 /*Lister opp søkeresultater i "bookcards"*/
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import BookList from "./BookList"
 
-export default function SearchResults({content, setQuery, setCurrentKey}) {
+export default function SearchResults({query}) {
 
-  const [search, setSearch] = useState("")
+  const [books, setBooks] = useState([])
+  const [loading, setLoading] = useState(false)
 
-  const handleChange = (event) => setSearch(event.target.value)
+  useEffect(() => {
+    if(query.length < 3) {
+        setBooks([])
+        return
+    }
 
-
-  const handleSubmit = (e) => {
-      e.preventDefault() //Denne vil hindre nettsiden å refreshe seg når man trykke submit
-      setQuery(search)
+    const fetchData = async () => {
+        setLoading(true)
+        try {
+            const response = await fetch(`https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`)
+            const data = await response.json()
+            setBooks(data.docs)
+        } catch (error) {
+            console.error("Feil ved henting av data", error)
+            setBooks([])
+        } finally {
+            setLoading(false)
+        }
   }
 
-  const handleClick = (key) => {
-      setCurrentKey(key)
-      localStorage.setItem("boknøkkel", key)
-  }
+fetchData()
+}, [query])
 
-  return (
-  <>
-      <h1>Bøker</h1>
-      <form onSubmit={handleSubmit}>
-          <label htmlFor="search">Søk etter bøker:</label>
-          <input type="text" id="search" placeholder="Skriv her..." onChange={handleChange}></input>
-          <input type="submit" value="Søk"></input>
-      </form>
-      <ul className="book-list">
-          {content.map((item) => <li key={item.key}>
-          <Link to ={item.name} onClick={() => handleClick(item.key)}>{item.name}</Link></li>)}
-      </ul>
-  </>
-  )
+if(loading) return <p>Laster inn...</p>
+if (books.length === 0 && query.length >= 3) return <p>Ingen bøker funnet</p>
+
+return <BookList books={books} />
+
 }
