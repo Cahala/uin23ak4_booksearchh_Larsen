@@ -1,55 +1,43 @@
-import { Router } from 'react-router-dom'
-import './App.css'
-import { useState, useEffect } from 'react'
-import Layout from './components/Layout'
-import SearchBar from './components/SearchBar'
+import React, { useState, useEffect } from 'react'
+import { Routes, Route, Link } from 'react-router-dom'
 import BookList from './components/BookList'
+import BookCard from './components/BookCard'
+import SearchBar from './components/SearchBar'
+import Layout from './components/Layout'
 
 function App() {
   const [query, setQuery] = useState('')
   const [books, setBooks] = useState([])
-  const [searching, setSearching] = useState(false)
+  const [isSearchResult, setIsSearchResult] = useState(false)
+
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const response = await fetch('https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond')
+      let url
+      if (query.length >= 3) {
+        url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`
+        setIsSearchResult(true)
+      } else {
+        url = 'https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond'
+        setIsSearchResult(false)
+      }
+      const response = await fetch(url)
       const data = await response.json()
       setBooks(data.docs)
     };
-
-    if (!query) {
-      fetchBooks()
-    }
-  }, [query])
-
   
-  useEffect(() => {
-    const fetchSearchResults = async () => {
-      if (query.length >= 3) {
-        setSearching(true)
-        const response = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`)
-        const data = await response.json()
-        setBooks(data.docs)
-      } else {
-        setSearching(false)
-      }
-    };
-
-    fetchSearchResults()
+    fetchBooks()
   }, [query])
-
 
   return (
-      <Layout>
-      <SearchBar onSearch={(input) => {
-        setQuery(input);
-        if (input.length < 3) {
-          setSearching(false)
-        }
-      }} />
-      <BookList books={books} />
-      </Layout>
+    <Layout>
+      <SearchBar onSearch={(input) => setQuery(input)} />
+      <Routes>
+        <Route path="/" element={<BookList books={books} />} />
+        <Route path="/book/:key" element={<BookCard detailed={true} />} />
+      </Routes>
+    </Layout>
   )
 }
 
-export default App
+export default App;

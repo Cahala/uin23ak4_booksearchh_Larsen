@@ -2,10 +2,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
-$darkblue: #2A324B;
-$lightblue: #58699D;
-$lightgrey: #E1E5EE;
+
+$beige: #b3b59c;
 $white: #ffffff;
+$black: #000000;
 
 $font: 'Montserrat', sans-serif;
 $rootsize: 20px;
@@ -16,7 +16,7 @@ body {
     height: 100vh;
     margin: 0 1rem;
     padding: 0;
-    background-color: $lightgrey;
+    background-color: $beige;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -43,7 +43,7 @@ nav {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: $darkblue;
+            background-color: $white;
             color: $white;
             font-family: $font;
             font-size: 1rem;
@@ -57,10 +57,7 @@ nav {
             
         }
 
-        .active {
-            background-color: $white;
-            color: $darkblue;
-        }
+    
          
     }
 }
@@ -78,7 +75,7 @@ section {
 
     h2 {
         text-transform: uppercase;
-        color: $darkblue;
+    
     }
 
 }
