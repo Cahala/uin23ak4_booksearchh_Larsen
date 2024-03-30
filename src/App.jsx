@@ -1,45 +1,53 @@
-import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import './App.css'
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import SearchBar from './components/SearchBar'
 import Layout from './components/Layout'
-import BookCard from './components/BookCard'
+import SearchBar from './components/SearchBar'
 import BookList from './components/BookList'
-
+import BookCard from './components/BookCard'  
 
 function App() {
   const [query, setQuery] = useState('')
   const [books, setBooks] = useState([])
-  const [isSearchResult, setIsSearchResult] = useState(false)
-
+  const [searching, setSearching] = useState(false)
 
   useEffect(() => {
     const fetchBooks = async () => {
-      let url
-      if (query.length >= 3) {
-        url = `https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`
-        setIsSearchResult(true)
-      } else {
-        url = 'https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond'
-        setIsSearchResult(false)
-      }
-      const response = await fetch(url)
+      const response = await fetch('https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond')
       const data = await response.json()
       setBooks(data.docs)
+    };
+
+    if (!query) {
+      fetchBooks()
     }
-  
-    fetchBooks()
   }, [query])
- 
+
+
+  useEffect(() => {
+    const fetchSearchResults = async () => {
+      if (query.length >= 3) {
+        setSearching(true)
+        const response = await fetch(`https://openlibrary.org/search.json?title=${encodeURIComponent(query)}`)
+        const data = await response.json()
+        setBooks(data.docs)
+      } else {
+        setSearching(false)
+      }
+    };
+
+    fetchSearchResults()
+  }, [query])
+
   return (
     <Layout>
-      <SearchBar onSearch={(input) => setQuery(input)} />
+      <SearchBar onSearch={setQuery} />
       <Routes>
         <Route path="/" element={<BookList books={books} />} />
-        <Route path="/book/:key" element={<BookCard detailed={true} />} />
+        <Route path="/book/:key" element={<BookCard />} />
       </Routes>
     </Layout>
-  )
+  );
 }
 
 export default App;

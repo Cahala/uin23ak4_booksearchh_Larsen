@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-
 export default function BookCard({ book }) {
-  const { key } = useParams()
-  const [bookDetails, setBookDetails] = useState(null)
+  // Funksjon for å hente bilde URL basert på ISBN
+  const getCoverImageUrl = (isbn) => isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg` : ''
 
-  useEffect(() => {
-    if (key) {
-      const fetchBookDetails = async () => {
-        const response = await fetch(`https://openlibrary.org${key}.json`)
-        const data = await response.json()
-        setBookDetails(data)
-      }
-      fetchBookDetails()
-    } else {
-      // Hvis ikke i detaljvisning, sett bookDetails basert på prop
-      setBookDetails(book)
-    }
-  }, [key, book])
+  const isbn = book.isbn ? book.isbn[0] : ''
 
-  // Funksjon for å hente bilde URL basert på ISBN eller cover ID
-  const getCoverImageUrl = (coverId) => coverId ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg` : ''
+  const hasGoodreadsId = book.id_goodreads ? true : false;
 
-  // Venter på data
-  if (!bookDetails) return <div>Laster inn...</div>
 
-  // Felles komponent for å vise bokinformasjon
   return (
     <article className="bookCard">
-      <h1>{key ? bookDetails.title : <Link to={`/book/${book.key}`}>{book.title}</Link>}</h1>
-      <img src={getCoverImageUrl(bookDetails.cover_i)} alt={`Cover of ${bookDetails.title}`} />
-      <p>Forfatter: {bookDetails.author_name?.join(", ")}</p>
-      <p>Første publiseringsår: {bookDetails.first_publish_year}</p>
-      {bookDetails.id_goodreads && (
-        <a href={`https://www.goodreads.com/book/show/${bookDetails.id_goodreads[0]}`} target="_blank" rel="noopener noreferrer">Mer om boka på Goodreads</a>
+      <h1>{book.title}</h1>
+      {isbn && (
+        <img src={getCoverImageUrl(isbn)} alt={`Cover of ${book.title}`} />
+      )}
+      <p>Forfatter: {book.author_name?.join(", ")}</p>
+      <p>Første publiseringsår: {book.first_publish_year}</p>
+      {book.ratings_average && (
+        <p>Gjennomsnittlig rating: {book.ratings_average}</p>
+      )}
+      {hasGoodreadsId && (
+        <a href={`https://www.goodreads.com/book/show/${book.id_goodreads[0]}`} target="_blank" rel="noopener noreferrer">Mer om boka på Goodreads</a>
       )}
     </article>
   )
+
 }
