@@ -1,4 +1,3 @@
-/*Lister opp søkeresultater i "bookcards"*/
 import { useEffect, useState } from "react"
 import BookList from "./BookList"
 

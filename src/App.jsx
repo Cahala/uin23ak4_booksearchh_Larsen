@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
-import BookList from './components/BookList'
-import BookCard from './components/BookCard'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import SearchBar from './components/SearchBar'
 import Layout from './components/Layout'
+import BookCard from './components/BookCard'
+import BookList from './components/BookList'
+
 
 function App() {
   const [query, setQuery] = useState('')
@@ -24,11 +26,11 @@ function App() {
       const response = await fetch(url)
       const data = await response.json()
       setBooks(data.docs)
-    };
+    }
   
     fetchBooks()
   }, [query])
-
+ 
   return (
     <Layout>
       <SearchBar onSearch={(input) => setQuery(input)} />
