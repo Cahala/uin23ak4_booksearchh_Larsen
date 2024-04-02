@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react"
-import BookCard from "./BookCard"
+import { useState } from "react"
 
-export default function SearchResults({ query }) {
-    const [books, setBooks] = useState([])
-    const [loading, setLoading] = useState(false)
-  
-    useEffect(() => {
-      setLoading(true)
-      const fetchData = async () => {
-        const url = query.length >= 3 
-          ? `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}` 
-          : 'https://openlibrary.org/search.json?author=Ian+Fleming&title=James+Bond'
-        const response = await fetch(url)
-        const data = await response.json()
-        setBooks(data.docs)
-        setLoading(false)
-      }
+export default function SearchResults({setSearch, books, setbookTitle}) {
 
-      fetchData()
-    }, [query])
-  
-    if (loading) return <p>Laster inn...</p>
-    if (!loading && books.length === 0 && query.length < 3) {
-      return <p>Ingen bøker funnet</p>
-    }
-  
-    return (
-      <ul>
-        {books.map(book => (
-          <BookCard key={book.key} book={book} detailed={false}/>
-        ))}
-      </ul>
-    )
-  }
+  const [input, setInput] = useState("")
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setSearch(input)
+}
+
+const handleChange = (event) => {
+  setInput(event.target.value)
+}
+
+const handleClick = (key) => {
+  setbookTitle(true)
+}
+
+  return (
+  <>
+    <form onSubmit={handleSubmit}>
+        <label htmlFor="search">Søk her:  </label>
+        <input type="text" id="search" placeholder="Hvilken bok ser du etter..." aria-label="søk etter bøker"
+        onChange={handleChange}></input>
+        <input type="submit" value="Søk"></input>
+    </form>
+  </>
+  )
+} 
