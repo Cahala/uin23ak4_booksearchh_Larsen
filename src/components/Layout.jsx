@@ -1,3 +1,7 @@
+import React from 'react'
+import Home from './Home'
+import SearchBar from './SearchBar'
+import { Link } from 'react-router-dom'
 
 
 export default function Layout({children}) {
@@ -5,13 +9,16 @@ export default function Layout({children}) {
     return (
     <>
         <header>
-            <nav>
-
-            </nav>
+                <nav>
+                <ul>
+                <li><Link to="/">Home</Link></li>
+                
+                </ul>
+                    <SearchBar onSearch={(input) => setQuery(input)} />
+                </nav>    
         </header>
         <main>
-
-          {children}
+            {children}
         </main>
         <footer></footer>
     </>

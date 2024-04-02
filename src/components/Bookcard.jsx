@@ -1,27 +1,29 @@
-export default function BookCard({ book }) {
-  // Funksjon for å hente bilde URL basert på ISBN
+import { useParams } from "react-router-dom"
+
+export default function BookCard({ books = [] }) {
+  let { key } = useParams()
+  const book = key ? books.find(book => book.key === key) : null
   const getCoverImageUrl = (isbn) => isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg` : ''
-
-  const isbn = book.isbn ? book.isbn[0] : ''
-
-  const hasGoodreadsId = book.id_goodreads ? true : false;
-
-
-  return (
-    <article className="bookCard">
-      <h1>{book.title}</h1>
-      {isbn && (
-        <img src={getCoverImageUrl(isbn)} alt={`Cover of ${book.title}`} />
-      )}
-      <p>Forfatter: {book.author_name?.join(", ")}</p>
-      <p>Første publiseringsår: {book.first_publish_year}</p>
-      {book.ratings_average && (
-        <p>Gjennomsnittlig rating: {book.ratings_average}</p>
-      )}
-      {hasGoodreadsId && (
-        <a href={`https://www.goodreads.com/book/show/${book.id_goodreads[0]}`} target="_blank" rel="noopener noreferrer">Mer om boka på Goodreads</a>
-      )}
-    </article>
-  )
-
+  // Hjelpefunksjon for å hente bilde URL basert på ISBN
+  
+  if (key && book) {
+    return (
+      <article className="bookCard">
+        <h1>{book.title}</h1>
+        {book.isbn && <img src={getCoverImageUrl(book.isbn[0])} alt={`Cover of ${book.title}`} />}
+        <p>Forfatter: {book.author_name?.join(", ")}</p>
+        <p>Første publiseringsår: {book.first_publish_year}</p>
+        {book.ratings_average && <p>Gjennomsnittlig rating: {book.ratings_average}</p>}
+        {book.id_goodreads && <a href={`https://www.goodreads.com/book/show/${book.id_goodreads[0]}`} target="_blank" rel="noopener noreferrer">Mer om boka på Goodreads</a>}
+      </article> //Fant ikke amazon_id i API, har derfor brukt goodreads istedenfor
+    )
+  } else {
+    return (
+      <ul className="book-list">
+        {books.map(book => (
+          <li key={book.key}>{book.title}</li>
+        ))}
+      </ul>
+    )
+  }
 }
