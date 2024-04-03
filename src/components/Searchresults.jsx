@@ -1,6 +1,4 @@
 import { useState } from "react"
-import { Link } from "react-router-dom" 
-import BookCard from "./BookCard"
 
 export default function SearchResults({setSearch, books}) {
 
@@ -15,11 +13,6 @@ const handleChange = (event) => {
   setInput(event.target.value)
 }
 
-/*const handleClick = (key) => {
-  setbookTitle(key)
-  localStorage.setItem("karakterID", id)
-}*/
-
   return (
   <>
     <form onSubmit={handleSubmit}>
@@ -28,14 +21,6 @@ const handleChange = (event) => {
         onChange={handleChange}></input>
         <input type="submit" value="Søk"></input>
     </form>
-    <ul>
-      {books?.map(book => 
-      <li key={book.key}>
-      <BookCard book={book} />
-      </li>)}
-    </ul>
   </>
   )
-} 
-/*<p>{book.title}</p>
-<Link to ={book.title} onClick={() => handleClick(book.key)}>{book.title}</Link>*/
+}

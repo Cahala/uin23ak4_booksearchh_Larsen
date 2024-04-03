@@ -7,11 +7,10 @@ import SearchResults from './components/SearchResults'
 import BookCard from './components/BookCard'
 
 function App() {
-  const [search, setSearch] = useState("James+Bond+(Original+Series") //const [query, setQuery] = useState("beth")
-  const [books, setBooks] = useState(null) // const [content, setContent] = useState([])
+  const [books, setBooks] = useState(null)
+  const [search, setSearch] = useState("James+Bond+(Original+Series")
 
 
-  //const [bookTitle, setbookTitle] = useState(true) //const [currentid, setCurrentid] = useState("")//
  
   useEffect(()=> {
     fetch(`https://openlibrary.org/search.json?&title=${(search)}`)
