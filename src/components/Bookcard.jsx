@@ -25,7 +25,7 @@ export default function BookCard({book}) {
     return (
       <article className="bookCard">
         <h3>{book.title}</h3>
-        {book.isbn && <img src={`https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-M.jpg`} alt={`Cover of ${book.title}`} />}
+        {book.isbn && <img src={`https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-S.jpg`} alt={`Cover of ${book.title}`} />}
         <p>Author: {book.author_name?.join(", ")}</p>
         <p>First published year: {book.first_publish_year}</p>
         <p>Average Rating: {book.ratings_average || 'Ingen vurdering'}</p>
