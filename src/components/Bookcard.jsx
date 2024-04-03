@@ -7,7 +7,7 @@ export default function BookCard() {
   const [bookDetails, setBookDetails] = useState(null)
   const { bookKey } = useParams()
 
-  const amazonSearchUrl = `https://www.amazon.com/s?k=${bookDetails.isbn ? bookDetails.isbn[0] : bookDetails.title.replace(/\s+/g, '+')}`;
+  const amazonSearchUrl = `https://www.amazon.com/s?k=${bookDetails.isbn ? bookDetails.isbn[0] : bookDetails.title.replace(/\s+/g, '+')}`
 
 
   useEffect(() => {
@@ -16,11 +16,11 @@ export default function BookCard() {
         .then(response => response.json())
         .then(data => {
             // Make sure to adapt this depending on the data structure
-            setBookDetails(data);
+            setBookDetails(data)
         })
         .catch(error => {
-            console.error(error);
-            setBookDetails({});
+            console.error(error)
+            setBookDetails({})
         })
 }, [bookKey])
 

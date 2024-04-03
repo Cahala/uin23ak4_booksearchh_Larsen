@@ -14,6 +14,6 @@ return (
         </main>
         <footer></footer>
     </>
-);
+)
 
 }

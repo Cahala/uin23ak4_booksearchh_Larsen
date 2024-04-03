@@ -42,20 +42,22 @@ nav {
         cursor: pointer;
     }
 
-    #search {
-        padding: 0.5rem;
-    }
+}
 
-    #searchbotton {
-        margin-left: 0.5rem;
-        background-color: $black;
-        border: 1px solid $white;
-        color: $white;
-        font-family: 'Montserrat', sans-serif;
-        margin-bottom: 0.5rem;
-        padding: 0.5rem;
-        cursor: pointer;
-    }
+
+#search {
+    padding: 0.5rem;
+}
+
+#searchbutton {
+    margin-left: 0.5rem;
+    background-color: $black;
+    border: 1px solid $white;
+    color: $white;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
 }
 
 section {
