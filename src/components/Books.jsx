@@ -6,9 +6,9 @@ export default function Books({books}) {
     <>
         <Outlet />
         <ul className="book-list">
-            {books.map((book, index) => (
-           <li key={index} className="book-title">
-            <Link to={`/book/${book.key}`} className="book-link">{book.title}</Link>
+            {books?.map(book => (
+           <li key={book.key} className="book-title">
+            <Link to={`/book/${book.key}`}>{book.title}</Link>
             </li>   
             ))}
         </ul>

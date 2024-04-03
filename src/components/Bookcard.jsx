@@ -1,9 +1,32 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-export default function BookCard({book}) {
+export default function BookCard(/*{book}*/) {
   //const [info, setInfo] = useState()
 
+  const [bookDetails, setBookDetails] = useState(null)
+  const { bookKey } = useParams()
+
   const amazonSearchUrl = `https://www.amazon.com/s?k=${book.isbn ? book.isbn[0] : book.title.replace(/\s+/g, '+')}`;
+
+
+  useEffect(() => {
+    // Make sure the API endpoint is correct and allows retrieving data using the 'key'
+    fetch(`https://openlibrary.org/works/${bookKey}.json`)
+        .then(response => response.json())
+        .then(data => {
+            // Make sure to adapt this depending on the data structure
+            setBookDetails(data);
+        })
+        .catch(error => {
+            console.error(error);
+            setBookDetails({});
+        })
+}, [bookKey])
+
+if (!bookDetails) {
+    return <p>Laster inn...</p>
+}
 
 
   //const getCoverImageUrl = (isbn) => isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-S.jpg` : ''

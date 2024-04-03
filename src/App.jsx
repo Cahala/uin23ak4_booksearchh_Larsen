@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Routes, Route} from 'react-router-dom'
 import './App.css'
 import { useState, useEffect } from 'react'
 import Books from './components/Books'
@@ -10,12 +10,11 @@ function App() {
   const [search, setSearch] = useState("james+bond") //const [query, setQuery] = useState("beth")
   const [books, setBooks] = useState([]) // const [content, setContent] = useState([])
 
+
   //const [bookTitle, setbookTitle] = useState(true) //const [currentid, setCurrentid] = useState("")//
  
   useEffect(()=> {
-    const searchTerm = search.length >= 3 
-    
-    fetch(`https://openlibrary.org/search.json?&title=${(searchTerm)}`)
+    fetch(`https://openlibrary.org/search.json?&title=${(search)}`)
     .then (response => response.json())
     .then (data => {setBooks(data.docs)
     })
@@ -31,13 +30,14 @@ function App() {
 
   return (
     <>
-    <Layout setSearch={setSearch}>
-      <Routes>
-        <Route index element={<Books books={books} />}/>
-        <Route path="/search" element={<SearchResults books={books}/>} />
-        <Route path="/book/:bookKey" element={<BookCard />} />
-      </Routes>
-    </Layout>
+
+      <Layout setSearch={setSearch}>
+        <Routes>
+          <Route index element={<Books books={books} />}/>
+          <Route path="/search" element={<SearchResults books={books}/>} />
+          <Route path="/book/:bookKey" element={<BookCard />} />
+        </Routes>
+      </Layout>
   </>
   )
 }
