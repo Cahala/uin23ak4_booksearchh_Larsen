@@ -2,20 +2,21 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export default function BookCard() {
-  //const [info, setInfo] = useState()
 
+  //lagre detaljene om boken som lastes
   const [bookDetails, setBookDetails] = useState(null)
+  //hente ut parameteren bookKey fra URL-en, som representerer den unike identifikatoren for boken som skal vises.
   const { bookKey } = useParams()
 
+  //URL for å søke etter boken på Amazon
   const amazonSearchUrl = `https://www.amazon.com/s?k=${bookDetails.isbn ? bookDetails.isbn[0] : bookDetails.title.replace(/\s+/g, '+')}`
 
-
+//henter bokdata fra Open Library API basert på bookKey. Den oppdaterer tilstanden bookDetails med 
+//responsdata eller et tomt objekt hvis det oppstår en feil. Denne effekten kjøres på nytt hver gang bookKey endres.
   useEffect(() => {
-    // Make sure the API endpoint is correct and allows retrieving data using the 'key'
     fetch(`https://openlibrary.org/works/${bookKey}.json`)
         .then(response => response.json())
         .then(data => {
-            // Make sure to adapt this depending on the data structure
             setBookDetails(data)
         })
         .catch(error => {
@@ -24,26 +25,7 @@ export default function BookCard() {
         })
 }, [bookKey])
 
-if (!bookDetails) {
-    return <p>Laster inn...</p>
-}
-
-
-  //const getCoverImageUrl = (isbn) => isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-S.jpg` : ''
-  //https://covers.openlibrary.org/a/olid/OL23919A-s.jpg -- SKRIVE OM ANNEN 
-  // Hjelpefunksjon for å hente bilde URL basert på ISBN
-  
-  /*const getInformation = async() => {
-    fetch(`https://openlibrary.org/search.json?&title=${(bookTitle)}`)
-    .then(response => response.json())
-    .then (data => setInfo(data))
-    .catch(error => console.error(error))
-  }
-
-  useEffect(()=>{
-    getInformation ()
-  },[bookTitle])*/
-
+//Hovedrendering for 'BookCard' komponenten
     return (
       <article className="bookCard">
         <h3>{bookDetails.title}</h3>
@@ -51,7 +33,8 @@ if (!bookDetails) {
         <p>Author: {bookDetails.author_name?.join(", ")}</p>
         <p>First published year: {bookDetails.first_publish_year}</p>
         <p>Average Rating: {bookDetails.ratings_average || 'Ingen vurdering'}</p>
-        <a href={amazonSearchUrl} target="_blank" rel="noopener noreferrer">Read more on Amazon</a>
+        <a href={amazonSearchUrl} target="_blank" rel="noopener noreferrer">Read more on Amazon</a>//Kilde: ChatGPT
+        
       </article>
     )
   }

@@ -10,21 +10,18 @@ function App() {
   const [books, setBooks] = useState([])
   const [search, setSearch] = useState("James+Bond+(Original+Series)")
 
+  //utfører en side-effekt når 'search'-variabelen endres
   useEffect(()=> {
+    // Gjør et API-kall til OpenLibrary for å søke etter bøker basert på søketermen
     fetch(`https://openlibrary.org/search.json?&title=${(search)}`)
-    .then (response => response.json())
-    .then ((data) => {setBooks(data.docs)
+    .then (response => response.json()) // Konverterer svaret til JSON
+    .then ((data) => {
+      setBooks(data.docs) //'books'-state oppdatereres med resultatet
     })
-    .catch ((error) => console.error(error))
+    .catch ((error) => console.error(error)) // Logger eventuelle feil til konsollen
 
-  }, [search])
+  }, [search]) //effekten kjøres kun når 'search' endres
 
-
- /*if (books === null) {
-  return <p>Laster inn...</p>
- } else if (books.length === 0 && search.length <= 3) {
-    return <p>Ingen bøker funnet</p>
-  }*/
 
   return (
     <>
