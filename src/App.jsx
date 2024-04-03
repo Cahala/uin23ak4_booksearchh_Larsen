@@ -7,8 +7,8 @@ import SearchResults from './components/SearchResults'
 import BookCard from './components/BookCard'
 
 function App() {
-  const [search, setSearch] = useState("james+bond") //const [query, setQuery] = useState("beth")
-  const [books, setBooks] = useState([]) // const [content, setContent] = useState([])
+  const [search, setSearch] = useState("James+Bond+(Original+Series") //const [query, setQuery] = useState("beth")
+  const [books, setBooks] = useState(null) // const [content, setContent] = useState([])
 
 
   //const [bookTitle, setbookTitle] = useState(true) //const [currentid, setCurrentid] = useState("")//
@@ -23,10 +23,11 @@ function App() {
   }, [search])
 
 
-  /*if (bookTitle) return <p>Laster inn...</p>
-  if (!bookTitle && books.length === 0 && search.length => 3) {
+ if (books === null) {
+  return <p>Laster inn...</p>
+ } else if (books.length === 0 && search.length <= 3) {
     return <p>Ingen bøker funnet</p>
-  }*/
+  }
 
   return (
     <>

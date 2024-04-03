@@ -27,38 +27,34 @@ body {
     justify-content: center;
 }
 
-
 nav {
     font-weight: 700;
     font-size: 1rem;
     width: 100%;
-    
-    ul{
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin: 0;
-        
-        a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: $white;
-            color: $white;
-            font-family: $font;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            border: none;
-            height: 2rem;
-            padding: 2rem;
-            text-decoration: none;
-            
-        }
 
-    
-         
+    button {
+        background-color: $black;
+        border: 1px solid $white;
+        color: $white;
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+
+    #search {
+        padding: 0.5rem;
+    }
+
+    #searchbotton {
+        margin-left: 0.5rem;
+        background-color: $black;
+        border: 1px solid $white;
+        color: $white;
+        font-family: 'Montserrat', sans-serif;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+        cursor: pointer;
     }
 }
 
@@ -82,57 +78,33 @@ section {
 
 .book-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     padding: 20px;
+    list-style: none;
 }
 
 .book-title {
     margin: 5px 0;
+    border: 1px solid $white;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+
+    a {
+        text-decoration: none;
+        color: $black;
+    }
 }
 
-.book-link {
-    color: #0000EE; /* Standard link color */
-    text-decoration: none; /* Optional: if you don't want the underline */
-}
 
-.book-link:hover {
-    text-decoration: underline; /* Restores underline on hover */
-}
+ @media only screen and (min-width: 900px) {
 
 
+    .book-title {
+     margin: 0.5rem;
 
- @media only screen and (min-width: 1000px) {
-
-
-    nav {
-    
-
-        ul{
-            flex-direction: row;
-            justify-content: space-between;
-            max-width: 1000px;
-            display: flex;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            width: 100%;
-            gap: 1rem;
-        
-            a {
-                flex-direction: row;
-                font-size: 0.85rem;
-                width: auto;
-                margin-bottom: 0;
-                width: 230px;
-            }
-        }
     }
 
-    section {
-        max-width: 1000px;
-        min-height: 400px;
-        padding: 4rem;
-        margin-top: 0;
-    }   
-} 
+ }
