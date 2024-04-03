@@ -1,48 +1,41 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
 import { useState, useEffect } from 'react'
-import Layout from './components/Layout'
-import Home from './components/Home'
 import Books from './components/Books'
-import BookDetails from './components/BookDetails'
-import BookCard from './components/BookCard'
+import Layout from './components/Layout'
+import SearchResults from './components/SearchResults'
+
 
 function App() {
-  const [search, setSearch] = useState("james+bond") //const [query, setQuery] = useState("beth")
+  const [search, setSearch] = useState("") //const [query, setQuery] = useState("beth")
   const [books, setBooks] = useState([]) // const [content, setContent] = useState([])
+  const navigate = useNavigate()
   const [bookTitle, setbookTitle] = useState(true) //const [currentid, setCurrentid] = useState("")//
  
+  useEffect(()=> {
+    if (search.length >= 3 || search.length === "james+bond") {
+    fetch(`https://openlibrary.org/search.json?&title=${(search)}`)
+    .then (response => response.json())
+    .then (data => {setBooks(data.docs)
+      if (search) navigate('/search')
+    })
+    .catch (error => console.error(error))
+   }
 
-  const getBook = async()=>{
-    try { 
-      const response = await fetch(`https://openlibrary.org/search.json?&title=${encodeURIComponent(search)}`)
-      const data = await response.json()
-      setBooks(data)
-    } catch {
-        console.error("Det har skjedd en feil")
-      }
-  }
-   
-  useEffect(()=>{
-   if (search.length >= 3) {
-      getBook()
-      setbookTitle(false)
-    }
-  }, [search]) //For å gi beskjed om at det skal hentes/bygges på nytt 
+  }, [search, navigate])
 
-  if (bookTitle) return <p>Laster inn...</p>
-  if (!bookTitle && books.length === 0 && search.length < 3) {
+
+  /*if (bookTitle) return <p>Laster inn...</p>
+  if (!bookTitle && books.length === 0 && search.length => 3) {
     return <p>Ingen bøker funnet</p>
-  }
+  }*/
 
   return (
     <>
-    <Layout>
+    <Layout setSearch={setSearch}>
       <Routes>
-        <Route path="/" exact element={Home}/>
-        <Route path="books" element={<Books/>} />
-        <Route path= ":bookKey" element={BookDetails }/>
-        <Route index element={<BookCard />}/>
+        <Route index element={<Books books={books} />}/>
+        <Route path="/search" element={<SearchResults books={books}/>} />
       </Routes>
     </Layout>
   </>

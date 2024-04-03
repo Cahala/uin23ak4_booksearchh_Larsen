@@ -1,22 +1,31 @@
 import React from 'react'
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import SearchResults from './SearchResults'
 
 
-export default function Layout({children}) {
-    const [query, setQuery] = useState('')
+export default function Layout({children, setSearch}) {
+    //const [query, setQuery] = useState('')
 
-    return (
+    
+  const handleSearchSubmit = (e, inputValue) => {
+    e.preventDefault()
+    if (inputValue.length >= 3) {
+        setSearch(inputValue)
+    }
+}
+
+return (
     <>
         <header>
             <h1>Finn boken du leter etter</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et 
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
-            ex ea commodo consequat.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             <nav>
-                <Link to="/"><button>Home</button></Link>
-                <SearchResults onSearch={(input) => setQuery(input)} />
+                <Link to="/"><button>Forsiden</button></Link>
+                {/* We'll include the search form directly here */}
+                <form onSubmit={(e) => handleSearchSubmit(e, e.target.search.value)}>
+                    <label htmlFor="search">Søk her: </label>
+                    <input type="text" id="search" name="search" placeholder="Hvilken bok ser du etter..." aria-label="søk etter bøker"></input>
+                    <input type="submit" value="Søk"></input>
+                </form>
             </nav>
         </header>
         <main>
@@ -24,5 +33,6 @@ export default function Layout({children}) {
         </main>
         <footer></footer>
     </>
-    )
+);
 }
+
