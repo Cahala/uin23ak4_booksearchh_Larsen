@@ -12,7 +12,7 @@ export default function BookCard(/*{book}*/) {
 
   useEffect(() => {
     // Make sure the API endpoint is correct and allows retrieving data using the 'key'
-    fetch(`https://openlibrary.org/works/${bookKey}.json`)
+    fetch(`https://openlibrary.org/search.json?title=${bookKey}.json`)
         .then(response => response.json())
         .then(data => {
             // Make sure to adapt this depending on the data structure
