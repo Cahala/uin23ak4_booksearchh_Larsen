@@ -80,6 +80,28 @@ section {
 
 }
 
+.book-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.book-title {
+    margin: 5px 0;
+}
+
+.book-link {
+    color: #0000EE; /* Standard link color */
+    text-decoration: none; /* Optional: if you don't want the underline */
+}
+
+.book-link:hover {
+    text-decoration: underline; /* Restores underline on hover */
+}
+
+
+
  @media only screen and (min-width: 1000px) {
 
 

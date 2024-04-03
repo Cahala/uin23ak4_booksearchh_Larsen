@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Books from './components/Books'
 import Layout from './components/Layout'
 import SearchResults from './components/SearchResults'
+import BookCard from './components/BookCard'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       <Routes>
         <Route index element={<Books books={books} />}/>
         <Route path="/search" element={<SearchResults books={books}/>} />
+        <Route path="/book/:bookKey" element={<BookCard />} />
       </Routes>
     </Layout>
   </>
