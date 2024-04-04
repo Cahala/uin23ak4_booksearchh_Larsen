@@ -1,7 +1,4 @@
-/*ALT HER ER BARE TIL EKSEMPEL*/
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
-
 
 $beige: #b3b59c;
 $white: #ffffff;
@@ -9,6 +6,18 @@ $black: #000000;
 
 $font: 'Montserrat', sans-serif;
 $rootsize: 20px;
+
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
 
 body {
     display: grid;
@@ -20,39 +29,30 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
-#root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
+header {
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-nav {
-    font-weight: 700;
-    font-size: 1rem;
-    width: 100%;
-
-    button {
-        background-color: $black;
-        border: 1px solid $white;
-        color: $white;
-        font-family: 'Montserrat', sans-serif;
-        margin-bottom: 0.5rem;
-        padding: 0.5rem;
-        cursor: pointer;
+        label {
+            margin-right: 0.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
     }
-
 }
-
 
 #search {
     padding: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 #searchbutton {
     margin-left: 0.5rem;
     background-color: $black;
-    border: 1px solid $white;
+    border: none;
     color: $white;
     font-family: 'Montserrat', sans-serif;
     margin-bottom: 0.5rem;
@@ -60,53 +60,51 @@ nav {
     cursor: pointer;
 }
 
-section {
-    background-color: $white;
-    height: 450px;
-    width: 100%;
-    margin-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    max-width: 1000px;
-    padding: 4rem;
-    box-sizing: border-box;
-
-    h2 {
-        text-transform: uppercase;
-    
-    }
-
-}
-
+ 
 .book-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-items: center;
-    padding: 20px;
-    list-style: none;
-}
 
-.book-title {
-    margin: 5px 0;
-    border: 1px solid $white;
-    padding: 0.5rem;
-    cursor: pointer;
-    margin-bottom: 0.5rem;
+    .book-title {
+        margin-top: 1.5rem;
+        border: 3px solid $white;
+        padding: 1rem;
+        max-width: 370px;
 
-    a {
-        text-decoration: none;
-        color: $black;
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none;
+            background-color: $black;
+            color: $white;
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+        }
     }
 }
 
+footer {
+    margin-top: 3rem;
+    font-size: 0.8rem;
 
- @media only screen and (min-width: 900px) {
+}
 
+
+ @media only screen and (min-width: 600px) {
+
+    header {
+        form {
+            flex-direction: row;
+        }
+    }
 
     .book-title {
      margin: 0.5rem;
-
     }
 
  }

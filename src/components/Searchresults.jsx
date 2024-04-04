@@ -15,13 +15,13 @@ export default function SearchResults({setSearch, setSearchParams}) {
       //KILDE: ChatGPT
     }
   }
-//Oppdaterer 'input'-tilstanden med verdien fra søkefeltet hver gang brukeren skriver
+  //Oppdaterer 'input'-tilstanden med verdien fra søkefeltet hver gang brukeren skriver
   const handleChange = (event) => {
     setInput(event.target.value)
     setSearchParams(event.target.value)
   }
 
-return (
+  return (
     <form onSubmit={handleSearchSubmit}>
       <label htmlFor="search">Søk her: </label>
       <input type="text" id="search" name="search" placeholder="Hvilken bok ser du etter..." aria-label="søk etter bøker" onChange={handleChange} value={input}></input>

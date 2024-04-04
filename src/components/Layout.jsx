@@ -1,10 +1,9 @@
 import React from 'react'
 import SearchResults from './SearchResults'
 
-
 export default function Layout({children, setSearch, setSearchParams}) {
 
-return (
+    return (
     <>
         <header>
             <h1>BIBLIOTEK</h1>
@@ -15,7 +14,7 @@ return (
         <main>
             {children}
         </main>
-        <footer></footer>
+        <footer>Copyright 2024</footer>
     </>
-)
+    )
 }
