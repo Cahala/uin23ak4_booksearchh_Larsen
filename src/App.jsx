@@ -1,4 +1,4 @@
-import { Routes, Route} from 'react-router-dom'
+import { Routes, Route, useSearchParams} from 'react-router-dom'
 import './App.css'
 import React, { useState, useEffect } from 'react'
 import Books from './components/Books'
@@ -8,7 +8,7 @@ import BookCard from './components/BookCard'
 function App() {
   const [books, setBooks] = useState([])
   const [search, setSearch] = useState("James+Bond+(Original+Series)")
-  const [searchParams, setSearchParams] = useState([])
+  const [searchParams, setSearchParams] = useSearchParams([])
 
   console.log(searchParams)
   //utfører en side-effekt når 'search'-variabelen endres
