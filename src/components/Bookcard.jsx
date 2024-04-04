@@ -1,25 +1,21 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
-export default function BookCard() {
-
-  //lagre detaljene om boken som lastes
-  const [bookDetails, setBookDetails] = useState(null)
-  //hente ut parameteren bookKey fra URL-en, som representerer den unike identifikatoren for boken som skal vises.
-  const { bookKey } = useParams()
-
-//henter bokdata fra Open Library API basert på bookKey. Den oppdaterer tilstanden bookDetails med 
-//responsdata eller et tomt objekt hvis det oppstår en feil. Denne effekten kjøres på nytt hver gang bookKey endres.
-  useEffect(() => {
-    fetch(`https://openlibrary.org/works/${bookKey}.json`)
-        .then(response => response.json())
-        .then(data => {
-            setBookDetails(data)
-        })
-        .catch(error => {
-            console.error(error)
-            setBookDetails({})
-        })
-}, [bookKey])
-
-  }
+export default function BookCard({books}) {
+    
+  //Kjører gjennom for å lage liste med bøker
+    return (
+    <>
+    <ul className="book-list"> 
+      {books.map((book) => (
+        <li key={book.key} className="book-title">
+        <h3>{book.title}</h3>
+        {book.isbn && <img src={`https://covers.openlibrary.org/b/isbn/${book.isbn[0]}-S.jpg`} alt={`Cover of ${book.title}`} />}
+        <p>Author: {book.author_name?.join(", ")}</p>
+        <p>First published year: {book.first_publish_year}</p>
+        <p>Average Rating: {book.ratings_average || 'Ingen vurdering'}</p>
+        <a href={`https://www.amazon.com/s?k=${book?.isbn?.[0] || ""}`} target ="_blank">Buy on Amazon</a>
+        </li>
+      ))}
+    </ul>
+    </>
+  );
+}

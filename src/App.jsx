@@ -1,7 +1,6 @@
 import { Routes, Route, useSearchParams} from 'react-router-dom'
 import './App.css'
 import React, { useState, useEffect } from 'react'
-import Books from './components/Books'
 import Layout from './components/Layout'
 import BookCard from './components/BookCard'
 
@@ -29,8 +28,7 @@ function App() {
       <Layout setSearch={setSearch} setSearchParams={setSearchParams}>
         <Routes>
 
-          <Route path="/" element={<Books books={books}/>}/>
-          <Route path="/book/:id" element={<BookCard />} />
+          <Route path="/" element={<BookCard books={books}/>}/>
         </Routes>
       </Layout>
   </>
