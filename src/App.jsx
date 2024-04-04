@@ -5,7 +5,9 @@ import BookCard from './components/BookCard'
 
 function App() {
   const [books, setBooks] = useState([])
-  const [search, setSearch] = useState("James+Bond+(Original+Series)")
+  const [search, setSearch] = useState("James+Bond+(Original+Series)") 
+  //TOLKNING AV OPPGAVE: la til "orginal+series" tillegg til "James+Bond", ettersom det står i oppgaveteksten
+  //at bokserier skal vises.
   const [searchParams, setSearchParams] = useSearchParams([])
 
   console.log(searchParams)
