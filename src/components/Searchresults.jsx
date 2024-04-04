@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function SearchResults({setSearch}) {
+export default function SearchResults({setSearch, setSearchParams}) {
 
   //Variabel for å holde på søkefeltets verdi
   const [input, setInput] = useState("")
@@ -18,6 +18,7 @@ export default function SearchResults({setSearch}) {
 //Oppdaterer 'input'-tilstanden med verdien fra søkefeltet hver gang brukeren skriver
   const handleChange = (event) => {
     setInput(event.target.value)
+    setSearchParams(event.target.value)
   }
 
 return (

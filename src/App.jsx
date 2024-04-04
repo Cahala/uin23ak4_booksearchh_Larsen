@@ -3,13 +3,14 @@ import './App.css'
 import React, { useState, useEffect } from 'react'
 import Books from './components/Books'
 import Layout from './components/Layout'
-import SearchResults from './components/SearchResults'
 import BookCard from './components/BookCard'
 
 function App() {
   const [books, setBooks] = useState([])
   const [search, setSearch] = useState("James+Bond+(Original+Series)")
+  const [searchParams, setSearchParams] = useState([])
 
+  console.log(searchParams)
   //utfører en side-effekt når 'search'-variabelen endres
   useEffect(()=> {
     // Gjør et API-kall til OpenLibrary for å søke etter bøker basert på søketermen
@@ -25,11 +26,11 @@ function App() {
 
   return (
     <>
-      <Layout setSearch={setSearch}>
-      <SearchResults setSearch={setSearch}/>
+      <Layout setSearch={setSearch} setSearchParams={setSearchParams}>
         <Routes>
+
           <Route path="/" element={<Books books={books}/>}/>
-          <Route path="/book/:bookKey" element={<BookCard />} />
+          <Route path="/book/:id" element={<BookCard />} />
         </Routes>
       </Layout>
   </>
