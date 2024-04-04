@@ -5,6 +5,7 @@ export default function BookCard({books}) {
     
   //lagre detaljene om boken som lastes
   const [bookDetails, setBookDetails] = useState(null)
+  
   //hente ut parameteren bookKey fra URL-en, som representerer den unike identifikatoren for boken som skal vises.
   const { bookKey } = useParams()
 
@@ -39,6 +40,7 @@ export default function BookCard({books}) {
             </li>
           </ul>
           <a href={`https://www.amazon.com/s?k=${book?.isbn?.[0] || ""}`} target ="_blank">Kjøp boken fra Amazon</a>
+        {/*Fant ikke amazon_id i API så valgte å bruke ISBN i stedenfor*/}
         </article>
       ))}
     </section>
