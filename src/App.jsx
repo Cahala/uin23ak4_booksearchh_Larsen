@@ -8,7 +8,9 @@ function App() {
   const [search, setSearch] = useState("James+Bond+(Original+Series)") 
   //TOLKNING AV OPPGAVE: la til "orginal+series" tillegg til "James+Bond", ettersom det står i oppgaveteksten
   //at bokserier skal vises.
+  
   const [searchParams, setSearchParams] = useSearchParams([])
+  //Kilde: medstudent Christian Kent Djønne Albinsson
 
   console.log(searchParams)
   //utfører en side-effekt når 'search'-variabelen endres

@@ -18,7 +18,7 @@ export default function SearchResults({setSearch, setSearchParams}) {
   //Oppdaterer 'input'-tilstanden med verdien fra søkefeltet hver gang brukeren skriver
   const handleChange = (event) => {
     setInput(event.target.value)
-    setSearchParams(event.target.value)
+    setSearchParams(event.target.value)// //Kilde: medstudent Christian Kent Djønne Albinsson
   }
 
   return (
